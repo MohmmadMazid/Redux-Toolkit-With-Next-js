@@ -4,7 +4,7 @@ import studentslice from "./feature/studentSlice";
 const store = configureStore({
   reducer: {
     todo: todoSlice,
-    studentdata: studentslice,
+    studentsData: studentslice,
   },
 });
 

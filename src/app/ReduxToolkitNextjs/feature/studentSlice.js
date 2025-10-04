@@ -2,7 +2,7 @@ const { createSlice, nanoid } = require("@reduxjs/toolkit");
 const { addTodo } = require("./slice");
 
 const initialState = {
-  studentsData: [{ name: "Rohan Vikash Rao", id: nanoid }],
+  studentsData: [{ name: "Rohan Vikash Rao", id: nanoid() }],
 };
 
 const studentSlice = createSlice({
@@ -13,7 +13,7 @@ const studentSlice = createSlice({
     addStudent: (state, action) => {
       let data = action.payload;
       let student = {
-        data,
+        name: data,
         id: nanoid(),
       };
       state.studentsData.push(student);
@@ -23,8 +23,12 @@ const studentSlice = createSlice({
       let id = action.payload;
       state.studentsData = state.studentsData.filter((item) => item.id !== id);
     },
+
+    removeAllStudents: (state) => {
+      state.studentsData = [];
+    },
   },
 });
 
-export const { addStudent, deleteStudent } = studentSlice.actions;
+export const { addStudent, deleteStudent ,removeAllStudents} = studentSlice.actions;
 export default studentSlice.reducer;
