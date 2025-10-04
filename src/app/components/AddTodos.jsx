@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTodo } from "../ReduxToolkitNextjs/feature/slice";
+import Link from "next/link";
 const AddTodos = () => {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
@@ -28,6 +29,8 @@ const AddTodos = () => {
           onChange={handleInputChange}
         />
         <button onClick={handleSubmit}>submit</button>
+        <br />
+        <Link href="/delete-todo">Goto-delete-todo</Link>
       </div>
     </div>
   );
