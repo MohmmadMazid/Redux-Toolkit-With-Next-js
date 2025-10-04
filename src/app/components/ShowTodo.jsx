@@ -23,6 +23,7 @@ const ShowTodo = () => {
       >
         My Todos Page
       </div>
+      {/* {alltodos.length && // this line when you are having multiple slices */}
       {alltodos.map((item) => {
         return (
           <div key={item.id}>
