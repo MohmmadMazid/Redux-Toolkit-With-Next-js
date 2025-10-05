@@ -1,7 +1,17 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice, current, nanoid } from "@reduxjs/toolkit";
+
+const getInitialTodos = () => {
+  if (typeof window !== "undefined") {
+    const savedTodos = localStorage.getItem("todos");
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  }
+  return [];
+};
 
 const initialState = {
-  todos: [{ name: "mazid mansury", id: nanoid() }],
+  // todos: [{ name: "mazid mansury", id: nanoid() }],
+  // todos: JSON.parse(localStorage.getItem("todos")) || [],
+  todos: getInitialTodos(),
 };
 
 const myTodoSlice = createSlice({
@@ -16,11 +26,15 @@ const myTodoSlice = createSlice({
         id: nanoid(),
       };
       state.todos.push(newTodo);
+      let empdata = JSON.stringify(current(state.todos));
+      localStorage.setItem("todos", empdata);
     },
 
     deleteTodo: (state, action) => {
       let id = action.payload;
       state.todos = state.todos.filter((item) => item.id !== id);
+
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
 
     removeTodo: (state, action) => {
