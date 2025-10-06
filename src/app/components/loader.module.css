@@ -1,0 +1,19 @@
+.loader {
+    height: 100px;
+    width: 100px;
+    border: 10px solid;
+    border-radius: 50%;
+    border-left-color: red ;
+    background-color: wheat;
+    animation: myspin 1s ease 0.5s infinite;
+}
+
+@keyframes myspin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(260deg);
+    }
+}

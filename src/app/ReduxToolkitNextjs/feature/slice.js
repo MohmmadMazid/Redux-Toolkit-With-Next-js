@@ -1,4 +1,10 @@
-import { createSlice, current, nanoid } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+  current,
+  nanoid,
+} from "@reduxjs/toolkit";
+import { act } from "react";
 
 const getInitialTodos = () => {
   if (typeof window !== "undefined") {
@@ -12,7 +18,15 @@ const initialState = {
   // todos: [{ name: "mazid mansury", id: nanoid() }],
   // todos: JSON.parse(localStorage.getItem("todos")) || [],
   todos: getInitialTodos(),
+  isLoading: true,
+  error: null,
+  postsData: [],
 };
+
+export const postsData = createAsyncThunk("usersData", async () => {
+  let res = await fetch("https://jsonplaceholder.typicode.com/posts");
+  return res.json();
+});
 
 const myTodoSlice = createSlice({
   name: "todo",
@@ -40,6 +54,20 @@ const myTodoSlice = createSlice({
     removeTodo: (state, action) => {
       state.todos = [];
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(postsData.pending, (state) => {
+      state.isLoading = false;
+      state.error = null;
+    });
+    builder.addCase(postsData.fulfilled, (state, action) => {
+      state.postsData = action.payload;
+      state.error = null;
+    });
+    builder.addCase(postsData.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
   },
 });
 
